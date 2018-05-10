@@ -1,0 +1,9 @@
+provider:
+  name: faas
+  gateway: http://127.0.0.1:8080
+
+functions:
+  alexa_read_todo:
+    lang: go-armhf
+    handler: ./alexa_read_todo
+    image: alexa_read_todo

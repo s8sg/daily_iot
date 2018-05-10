@@ -7,20 +7,26 @@
 #sudo usermod $USER -aG docker
 
 # Init swarm cluster
-echo "Initializing swarm master node"
-docker swarm init
-docker node ls
+#echo "Initializing swarm master node"
+#docker swarm init
+# docker node ls
 
 # install git
-sudo apt-get install -y git
+# sudo apt-get install -y git
 
 # Clone the faas repo
-echo "Initializing code repo"
+echo "Initializing code repo .."
 mkdir code
 cd code
 
 # Get openfaas
-echo "Get openfaas"
+echo "Getting openfaas .. "
 git clone https://github.com/alexellis/faas/
 cd faas
 ./deploy_stack.armhf.sh
+
+# Get faas cli
+echo "Getting faas-cli .."
+curl -sSL cli.openfaas.com | sudo sh
+
+
