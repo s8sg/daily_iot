@@ -1,0 +1,227 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "jarvis",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "enable",
+                    "slots": [
+                        {
+                            "name": "socket",
+                            "type": "Socket"
+                        }
+                    ],
+                    "samples": [
+                        "switch on",
+                        "start",
+                        "enable",
+                        "turn on"
+                    ]
+                },
+                {
+                    "name": "disable",
+                    "slots": [
+                        {
+                            "name": "socket",
+                            "type": "Socket",
+                            "samples": [
+                                "{socket}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "switch off",
+                        "stop",
+                        "disable",
+                        "turn off"
+                    ]
+                },
+                {
+                    "name": "status",
+                    "slots": [],
+                    "samples": [
+                        "socket status",
+                        "report status",
+                        "status"
+                    ]
+                },
+                {
+                    "name": "reset",
+                    "slots": [],
+                    "samples": [
+                        "reset socket",
+                        "reset"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "Socket",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "all",
+                                "synonyms": [
+                                    "entire"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "8",
+                                "synonyms": [
+                                    "eight"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "7",
+                                "synonyms": [
+                                    "seven"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "6",
+                                "synonyms": [
+                                    "six"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "5",
+                                "synonyms": [
+                                    "five"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "4",
+                                "synonyms": [
+                                    "four"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "3",
+                                "synonyms": [
+                                    "three"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2",
+                                "synonyms": [
+                                    "two"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1",
+                                "synonyms": [
+                                    "one"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "disable",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "socket",
+                            "type": "Socket",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1256823212369.1255893034754"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "enable",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "socket",
+                            "type": "Socket",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.187410740169.1483541189813"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "reset",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.662111347080"
+                    },
+                    "slots": []
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1256823212369.1255893034754",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "please specify the socket"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.187410740169.1483541189813",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "please specify the socket"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.662111347080",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Are you sure about resetting all sockets ?"
+                    }
+                ]
+            }
+        ]
+    }
+}

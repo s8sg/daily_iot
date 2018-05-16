@@ -12,3 +12,10 @@ functions:
        flatter_list: ""
        todo_list: ""
        user: "username"
+
+  jarvis:
+    lang: node8-express
+    handler: ./jarvis
+    image: jarvis:0.0.1
+    environment:
+       rasp_ctl_url: ""
