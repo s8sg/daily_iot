@@ -50,14 +50,47 @@ module.exports = (event, context) => {
 		                      .succeed(response);
 			}
 
-			const map = JSON.parse(body);
-			var resp = "";
-			for (var key in map) {
-				var value = map[key], state = "disable";
+			const jsonmap = JSON.parse(body);
+			
+			const ENABLE = "enable"
+			const DISABLE = "disable"
+
+			var map = {};
+			map[ENABLE] = []
+			map[DISABLE] = []
+			for (var key in jsonmap) {
+				var value = jsonmap[key], state = DISABLE;
 				if (value) {
-					state = "enable";
+					state = ENABLE;
 				}
-				resp += "socket " + key + " is " + state + "! ...";
+				map[state].push(key);
+			}
+
+			var resp = "";
+			if (map[ENABLE].length == 0) {
+				resp = "All of the sockets are disabled !"
+			} else if (map[DISABLE].length == 0) {
+				resp = "All of the sockets are enabled !"
+			} else {
+				resp = "socket "
+				var socketstr = ""
+				var nounce = "are"
+				map[ENABLE].forEach(function(value) {
+					socketstr += value + ", ";
+				});
+				if (map[ENABLE].length == 1) {
+					nounce = "is"
+				}
+				resp = resp + socketstr +  nounce + ' enabled, and socket '
+				socketstr = ""
+				nounce = "are"
+				map[DISABLE].forEach(function(value) {
+					socketstr += value + ", ";
+				});
+				if (map[DISABLE].length == 1) {
+					nounce = "is"
+				}
+				resp = resp + socketstr + nounce + ' disabled !'
 			}
 
 			response.response.outputSpeech.text = resp
@@ -67,8 +100,19 @@ module.exports = (event, context) => {
 				.headers({"Content-Type": contentType})
 				.succeed(response);
 		});
-	} else if (event.body.request.intent && (event.body.request.intent.name == "enable" || event.body.request.intent.name == "disable" || event.body.request.intent.name == "reset"))  {
+	} else if (event.body.request.intent && event.body.request.intent.name == "enable" 
+		&& event.body.request.intent.slots 
+		&& event.body.request.intent.slots.socket 
+		&& event.body.request.intent.slots.socket.value)  {
 
+		const response = JSON.parse(val);
+		response.response.outputSpeech.text =  event.body.request.intent.slots.socket.value + " is enabled!"; 
+		context
+		    .status(200)
+		    .headers({"Content-Type": contentType})
+		    .succeed(response);
+	} else if (event.body.request.intent 
+		&& (event.body.request.intent.name == "disable" || event.body.request.intent.name == "reset"))  {
 		const response = JSON.parse(val);
 		response.response.outputSpeech.text = event.body.request.intent.name + " is not implemented!"; 
 		context
