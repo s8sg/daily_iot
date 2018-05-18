@@ -13,7 +13,7 @@ module.exports = (event, context) => {
         return launchRequest(context);
     }
 
-    // Other request
+    // Other request type
     fs.readFile("./function/response.json", "utf8", (err, val) => {
 
 	if(err) {
@@ -68,11 +68,11 @@ module.exports = (event, context) => {
 
 			var resp = "";
 			if (map[ENABLE].length == 0) {
-				resp = "All of the sockets are disabled !";
+				resp = "All of the switches are disabled !";
 			} else if (map[DISABLE].length == 0) {
-				resp = "All of the sockets are enabled !";
+				resp = "All of the switches are enabled !";
 			} else {
-				resp = "socket ";
+				resp = "switch ";
 				var socketstr = "";
 				var nounce = "are";
 				map[ENABLE].forEach(function(value) {
@@ -81,7 +81,7 @@ module.exports = (event, context) => {
 				if (map[ENABLE].length == 1) {
 					nounce = "is";
 				}
-				resp = resp + socketstr +  nounce + ' enabled, and socket ';
+				resp = resp + socketstr +  nounce + ' enabled, and switch ';
 				socketstr = "";
 				nounce = "are";
 				map[DISABLE].forEach(function(value) {
@@ -100,12 +100,31 @@ module.exports = (event, context) => {
 				.headers({"Content-Type": contentType})
 				.succeed(response);
 		});
-	} else if (event.body.request.intent && event.body.request.intent.name == "enable" 
-		&& event.body.request.intent.slots 
-		&& event.body.request.intent.slots.socket 
-		&& event.body.request.intent.slots.socket.value)  {
+	} else if (event.body.request.intent && event.body.request.intent.name == "enable"
+		&& event.body.request.intent.slots
+		&& event.body.request.intent.slots.socket) {
 
-		let socket = event.body.request.intent.slots.socket.value;
+		if (!event.body.request.intent.slots.socket.value){
+			response.response.outputSpeech.text = "please try again with a switch value from 1 to 8 or all";
+        		response.response.shouldEndSession = false;
+			return context
+			      .status(200)
+			      .headers({"Content-Type": contentType})
+			      .succeed(response);
+		}
+
+		if (!(event.body.request.intent.slots.socket.resolutions.resolutionsPerAuthority[0].hasOwnProperty('values'))) {
+			response.response.outputSpeech.text = "Switch " + event.body.request.intent.slots.socket.value + ", doesn't exist!";
+			return context
+			      .status(200)
+			      .headers({"Content-Type": contentType})
+			      .succeed(response);
+		}
+		let socket = event.body.request.intent.slots.socket.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+
+		if (socket == "0") {
+			socket = "all";
+		}
 
 		url = url + "/enable?socket=" + socket;
 		const req = {
@@ -125,9 +144,11 @@ module.exports = (event, context) => {
 
 			var resp = "";
 			if (jsonmap[socket]) {
-				resp = "Socket " + socket + ", is enabled !";
-			}else {
-				resp = "Failed to enable socket " + socket + "! Some error occured in device ...";
+				resp = "Switch " + socket + ", is enabled !";
+			} else if (socket == "all") {
+				resp = "All switches are enabled !";
+			} else {
+				resp = "Failed to enable switch " + socket + "! Some error occured in device ...";
 			}
 
 			response.response.outputSpeech.text = resp;
@@ -137,9 +158,32 @@ module.exports = (event, context) => {
 				.headers({"Content-Type": contentType})
 				.succeed(response);
 		});
-	} else if (event.body.request.intent && event.body.request.intent.name == "disable")  {
+	} else if (event.body.request.intent && event.body.request.intent.name == "disable"
+		&& event.body.request.intent.slots
+		&& event.body.request.intent.slots.socket) {
 
-		let socket = event.body.request.intent.slots.socket.value;
+		if (!event.body.request.intent.slots.socket.value){
+			response.response.outputSpeech.text = "please try again with a switch value from 1 to 8 or all";
+        		response.response.shouldEndSession = false;
+			return context
+			      .status(200)
+			      .headers({"Content-Type": contentType})
+			      .succeed(response);
+		}
+
+		if (!(event.body.request.intent.slots.socket.resolutions.resolutionsPerAuthority[0].hasOwnProperty('values'))) {
+			response.response.outputSpeech.text = "Switch " + event.body.request.intent.slots.socket.value + ", doesn't exist!";
+			return context
+			      .status(200)
+			      .headers({"Content-Type": contentType})
+			      .succeed(response);
+		}
+
+		let socket = event.body.request.intent.slots.socket.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+
+		if (socket == "0") {
+			socket = "all";
+		}
 
 		url = url + "/disable?socket=" + socket;
 		const req = {
@@ -158,10 +202,12 @@ module.exports = (event, context) => {
 			const jsonmap = JSON.parse(body);
 
 			var resp = "";
-			if (!jsonmap[socket]) {
-				resp = "Socket " + socket + ", is disabled !";
-			}else {
-				resp = "Failed to disable socket " + socket + "! Some error occured in device ...";
+			if (jsonmap[socket] == false) {
+				resp = "Switch " + socket + ", is disabled !";
+			} else if (socket == "all") {
+				resp = "All switches are disabled !";
+			} else {
+				resp = "Failed to disable switch " + socket + "! Some error occured in device ...";
 			}
 
 			response.response.outputSpeech.text = resp;
@@ -179,7 +225,7 @@ module.exports = (event, context) => {
 		    .headers({"Content-Type": contentType})
 		    .succeed(response);
 	} else {
-		response.response.outputSpeech.text = "I dont know what you just said, you can ask to enable and disable socket or just ask for status!"; 
+		response.response.outputSpeech.text = "I dont know what you just said, you can ask to enable and disable switch or just ask for status!"; 
 		context
 		    .status(200)
 		    .headers({"Content-Type": contentType})
@@ -195,7 +241,7 @@ let launchRequest = (context) => {
         }
     
         const response = JSON.parse(val);
-        response.response.outputSpeech.text = "Jarvis!"
+        response.response.outputSpeech.text = "Jar vis"
         response.response.shouldEndSession = false;
 
         context

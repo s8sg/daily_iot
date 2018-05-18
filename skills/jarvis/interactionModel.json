@@ -24,14 +24,36 @@
                     "slots": [
                         {
                             "name": "socket",
-                            "type": "Socket"
+                            "type": "Socket",
+                            "samples": [
+                                "all",
+                                "eight",
+                                "seven",
+                                "six",
+                                "five",
+                                "four",
+                                "three",
+                                "two",
+                                "one"
+                            ]
                         }
                     ],
                     "samples": [
-                        "switch on",
-                        "start",
-                        "enable",
-                        "turn on"
+                        "activate {socket} switch",
+                        "switch on {socket} switch",
+                        "start {socket} switch",
+                        "enable {socket} switch",
+                        "turn on {socket} switch",
+                        "activate switch {socket}",
+                        "switch on switch {socket}",
+                        "start switch {socket}",
+                        "enable switch {socket}",
+                        "turn on switch {socket}",
+                        "activate {socket}",
+                        "switch on {socket}",
+                        "start {socket}",
+                        "enable {socket}",
+                        "turn on {socket}"
                     ]
                 },
                 {
@@ -41,22 +63,41 @@
                             "name": "socket",
                             "type": "Socket",
                             "samples": [
-                                "{socket}"
+                                "all",
+                                "eight",
+                                "seven",
+                                "six",
+                                "five",
+                                "four",
+                                "three",
+                                "two",
+                                "one"
                             ]
                         }
                     ],
                     "samples": [
-                        "switch off",
-                        "stop",
-                        "disable",
-                        "turn off"
+                        "deactivate {socket} switch",
+                        "switch off {socket} switch",
+                        "stop {socket} switch",
+                        "disable {socket} switch",
+                        "turn off {socket} switch",
+                        "deactivate switch {socket}",
+                        "switch off switch {socket}",
+                        "stop switch {socket}",
+                        "disable switch {socket}",
+                        "turn off switch {socket}",
+                        "deactivate {socket}",
+                        "switch off {socket}",
+                        "stop {socket}",
+                        "disable {socket}",
+                        "turn off {socket}"
                     ]
                 },
                 {
                     "name": "status",
                     "slots": [],
                     "samples": [
-                        "socket status",
+                        "switch status",
                         "report status",
                         "status"
                     ]
@@ -65,7 +106,7 @@
                     "name": "reset",
                     "slots": [],
                     "samples": [
-                        "reset socket",
+                        "reset device",
                         "reset"
                     ]
                 }
@@ -76,9 +117,9 @@
                     "values": [
                         {
                             "name": {
-                                "value": "all",
+                                "value": "0",
                                 "synonyms": [
-                                    "entire"
+                                    "all"
                                 ]
                             }
                         },
@@ -200,7 +241,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "please specify the socket"
+                        "value": "please try again with a switch value from one to eight or all"
                     }
                 ]
             },
@@ -209,7 +250,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "please specify the socket"
+                        "value": "please try again with a switch value from one to eight or all"
                     }
                 ]
             },
@@ -218,7 +259,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Are you sure about resetting all sockets ?"
+                        "value": "Are you sure that you want to reset the device?"
                     }
                 ]
             }
