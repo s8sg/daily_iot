@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+ head
+   title Jarvis
+ body
+   h3 Device
+   div.container
+     h8 Device 1
+     p  ----
+     ul
+       each val, key in state
+         li Switch #{key}: #{val}

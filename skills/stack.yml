@@ -19,3 +19,4 @@ functions:
     image: jarvis:0.0.1
     environment:
        rasp_ctl_url: ""
+       alexa_app_id: ""
