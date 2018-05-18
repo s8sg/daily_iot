@@ -241,7 +241,7 @@ let launchRequest = (context) => {
         }
     
         const response = JSON.parse(val);
-        response.response.outputSpeech.text = "Jar vis"
+        response.response.outputSpeech.type = "SSML";
         response.response.shouldEndSession = false;
 
         context
