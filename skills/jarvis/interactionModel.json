@@ -39,11 +39,11 @@
                         }
                     ],
                     "samples": [
-                        "activate {socket} switch",
-                        "switch on {socket} switch",
-                        "start {socket} switch",
-                        "enable {socket} switch",
-                        "turn on {socket} switch",
+                        "activate {socket} switches",
+                        "switch on {socket} switches",
+                        "start {socket} switches",
+                        "enable {socket} switches",
+                        "turn on {socket} switches",
                         "activate switch {socket}",
                         "switch on switch {socket}",
                         "start switch {socket}",
@@ -76,11 +76,11 @@
                         }
                     ],
                     "samples": [
-                        "deactivate {socket} switch",
-                        "switch off {socket} switch",
-                        "stop {socket} switch",
-                        "disable {socket} switch",
-                        "turn off {socket} switch",
+                        "deactivate {socket} switches",
+                        "switch off {socket} switches",
+                        "stop {socket} switches",
+                        "disable {socket} switches",
+                        "turn off {socket} switches",
                         "deactivate switch {socket}",
                         "switch off switch {socket}",
                         "stop switch {socket}",
