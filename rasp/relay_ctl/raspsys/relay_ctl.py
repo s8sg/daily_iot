@@ -52,5 +52,4 @@ def turnoff(socket):
         pinlock.release()
 
 def state():
-    state = socketState
-    return copy.deepcopy(state)
+    return copy.deepcopy(socketState)
