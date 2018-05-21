@@ -22,8 +22,8 @@ document.getElementsByName("switch").forEach(function(elem) {
 	    var xmlHttp = new XMLHttpRequest();
 	    xmlHttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status != 200) {
-		     document.getElementById(switchId).checked = initialVal;
-		     alert("Failed to change switch state from : " + (initialVal?"enable":"disable"));
+		     //document.getElementById(switchId).checked = initialVal;
+		     //alert("Failed to change switch state from : " + (initialVal?"enable":"disable"));
 		}
 	    };
 	    xmlHttp.open("GET", url, true);
