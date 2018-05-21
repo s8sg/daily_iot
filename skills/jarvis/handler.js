@@ -26,10 +26,10 @@ module.exports = (event, context) => {
 				console.log("failed to request device: " + err);
 				return context.fail("failed to request device: " + err);
 			}
-
-			var jsonmap = JSON.parse(body);
-
-		        var resp = compiledFunction({state: jsonmap});
+		    	var buildObj = {}
+			buildObj['jsonMap'] = JSON.parse(body);
+		        buildObj['publicUrl'] = process.env.jarvis_public_url
+		        var resp = compiledFunction({source: buildObj});
 		    	return context
 		    		.status(200)
 		    		.headers({"Content-Type": htmlType})
@@ -39,7 +39,6 @@ module.exports = (event, context) => {
 
 	    console.log('error, invalid request model');
 	    return context.fail("internal error");
-
     } else if(event.body.request.type == "LaunchRequest") {
 		return launchRequest(context);
     } else {

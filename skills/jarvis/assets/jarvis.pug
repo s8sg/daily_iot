@@ -2,20 +2,28 @@ doctype html
 html(lang='en')
  head
    title Jarvis
+   <meta name="viewport" content="width=device-width, initial-scale=1">
    style
-     include style.css
+     include css/style.css
  body
-   h2 Jarvis Controller
-   div.container
+   div.device
+     h2 Jarvis Portal
+   div.holoform
      h3 Device 1
-       <br>
-       each val, key in state
-         h4 #{key}
-         label.switch
-           if {val}
-             input(type='checkbox' id='#{key}' checked)
+     <br>
+     each val, key in source.jsonMap
+       span.checkbox
+         <label for='{key}'>Switch #{key} #{val} </lebel>
+         span
+           if (val == true)
+             input(id=key type='checkbox' name='switch' checked)
            else
-             input(type='checkbox' id='#{key}')
-           span.slider.round
-         <br><br>
+             input(id=key type='checkbox' name='switch')
+           <label data-on="ON" data-off="OFF"></label>
+     <a href="#" id="checkval">Check Values</a> 
    include foot.pug
+
+   script(type="text/javascript").
+     var deviceAddress="#{source.publicUrl}";
+   script(type="text/javascript")
+     include javascript/switch.js

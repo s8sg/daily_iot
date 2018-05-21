@@ -20,3 +20,4 @@ functions:
     environment:
        rasp_ctl_url: ""
        alexa_app_id: ""
+       jarvis_public_url: ""
