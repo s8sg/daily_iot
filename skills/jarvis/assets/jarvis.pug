@@ -2,11 +2,20 @@ doctype html
 html(lang='en')
  head
    title Jarvis
+   style
+     include style.css
  body
-   h3 Device
+   h2 Jarvis Controller
    div.container
-     h8 Device 1
-     p  ----
-     ul
+     h3 Device 1
+       <br>
        each val, key in state
-         li Switch #{key}: #{val}
+         h4 #{key}
+         label.switch
+           if {val}
+             input(type='checkbox' id='#{key}' checked)
+           else
+             input(type='checkbox' id='#{key}')
+           span.slider.round
+         <br><br>
+   include foot.pug
