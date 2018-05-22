@@ -1,0 +1,20 @@
+provider:
+  name: faas
+  gateway: http://127.0.0.1:8080
+
+functions:
+  jarvis:
+    lang: node8-express
+    handler: ./jarvis
+    image: jarvis:0.0.1
+    environment:
+       rasp_ctl_url: "https://6023e64d.ngrok.io"
+       alexa_app_id: ""
+
+  jarvis_portal:
+    lang: node8-express
+    handler: ./jarvis_portal
+    image: jarvis_portal:0.0.1
+    environment:
+       rasp_ctl_url: "https://6023e64d.ngrok.io"
+       jarvis_public_url: "https://6023e64d.ngrok.io"
